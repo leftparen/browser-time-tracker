@@ -1,0 +1,21 @@
+{
+    "name": "Plugin",
+    "manifest_version": 2,
+    "description": "Quick launch Plugin",
+    "version": "1.0.0",
+    "icons": { "128": "icon_128.png"},
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "history"
+    ]
+}
