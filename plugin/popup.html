@@ -88,6 +88,8 @@
         }
     </style>
     <script src="popup.js"></script>
+    <script src="content.js"></script>
+    <script src="background.js"></script>
 </head>
 
 <body>
@@ -112,11 +114,11 @@
                 </a>
             </div>
             <div>
-                <p id="demo">
-                    5
-                </p>
+                <textarea id="saveLine"></textarea>
+                <input type="button" id="save" value="Save Line">
+                
+                <input type="button" id="get" value="Get Saved Line">
             </div>
-            <script src="content.js"></script>
         </div>
     </div>
 </body>
