@@ -5,126 +5,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Plugin</title>
+
+    <title>JustIn Time</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
     <style>
-        html,
-        body {
-            font-family: "Open Sans", sans-serif;
-            font-size: 14px;
-            margin: 0;
-            min-height: 180px;
-            padding: 0;
-            width: 384px;
+        #header {
+            background-color: #add8e6;
+            width: 350px;
+            margin-bottom: -25px;
         }
 
-        h1 {
-            font-family: "Menlo", monospace;
-            font-size: 22px;
-            font-weight: 400;
-            margin: 0;
-            color: #2f5876;
-        }
-
-        a:link,
-        a:visited {
-            color: #000000;
-            outline: 0;
-            text-decoration: none;
-        }
-
-        img {
-            width: 30px;
-        }
-
-        .modal-header {
-            align-items: center;
-            border-bottom: 0.5px solid #dadada;
-        }
-
-        .modal-content {
-            padding: 0 22px;
-        }
-
-        .modal-icons {
-            border-top: 0.5px solid #dadada;
-            height: 50px;
-            width: 100%;
-        }
-
-        .logo {
-            padding: 16px;
-        }
-
-        .logo-icon {
-            vertical-align: text-bottom;
-            margin-right: 12 px;
-        }
-
-        .version {
-            color: #444;
-            font-size: 18px;
-        }
-
-        .flex-container {
+        #logo {
             display: flex;
-            justify-content: space-between;
-            padding: 10px 22px;
+            width: 30px;
+            padding: 5px;
+            margin-bottom: -75px;
         }
 
-        .flex {
-            opacity: 1;
-            transition: opacity 0.2s ease-in-out;
-            width: 120px;
+        #title {
+            padding: 10px;
+            margin-top: 25px;
+            text-align: right;
         }
 
-        .flex:hover {
-            opacity: 0.4;
+        a {
+            text-decoration: none;
+            color: black;
         }
 
-        .flex .fa {
-            font-size: 40px;
-            color: #2f5876;
+        #background {
+            background-color: #d5ebf2;
+            width: 350px;
+            height: 680px;
+        }
+
+        .subheader {
+            padding-top: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .subheader:before,
+        .subheader:after {
+            content: "";
+            flex: 1 1;
+            border-bottom: 2px solid black;
+            margin: auto;
+        }
+
+        .circle {
+            background-color: white;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            margin: 20px;
+            opacity: .7;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 1px black solid;
+        }
+
+        .circle2 {
+            background-color: white;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            margin: 20px;
+            margin-left: 225px;
+            opacity: .7;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 1px black solid;
+        }
+
+        .hours {
+            display: flex;
+            padding-top: 20px;
+            justify-content: center;
+        }
+
+        .rectangle {
+            background-color: white;
+            opacity: .7;
+            width: 150px;
+            height: 65px;
+            margin: -100px 0px 0px 175px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 1px black solid;
+        }
+
+        .rectangle2 {
+            background-color: white;
+            opacity: .7;
+            width: 150px;
+            height: 65px;
+            margin: -100px 0px 0px 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 1px black solid;
+        }
+
+        .apps {
+            display: flex;
+            justify-content: center;
+        }
+
+        #line1 {
+            font-size: 53px;
+            margin-left: 122px;
+            margin-top: -294px;
+            color: black;
+        }
+
+        #line2 {
+            font-size: 53px;
+            margin-left: 172px;
+            margin-top: 28px;
+            color: black;
+        }
+
+        #line3 {
+            font-size: 53px;
+            margin-left: 122px;
+            margin-top: 32px;
+            color: black;
+        }
+
+        .tam-box {
+            border: 1px solid black;
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            margin-left: 22px;
+            background-color: white;
+            opacity: .7;
+            font-size: 13px;
         }
     </style>
+
     <script src="popup.js"></script>
     <script src="content.js"></script>
     <script src="background.js"></script>
 </head>
 
 <body>
-    <div class="modal=header">
-        <h1>
-            <img src="images/icon1_150.png" alt="logo for plugin" class="logo-icon"> Plugin <span
-                class="version">(1.0.0)</span>
-        </h1>
-    </div>
-    <div class="modal-content">
-        <p>Easily access plugin information</p>
-    </div>
-    <div class="modal-icons">
-        <div class="flex-container">
-            <div class="flex">
-                <a href="https://app.slack.com/client/T024H30VD/C024H3105" target="_blank">
-                    <i class="fa fa-globe"></i>
-                </a>
-            </div>
-            <div class="flex">
-                <a href="https://app.slack.com/client/T024H30VD/C024H3105" target="_blank">
-                    <i class="fa fa-globe"></i>
-                </a>
-            </div>
-            <div>
-                <textarea id="saveLine"></textarea>
-                <input type="button" id="save" value="Save Line">
 
-                <input type="button" id="get" value="Get Saved Line">
-            </div>
+    <!-- top of popup -->
+    <div id="header">
+        <img id="logo" src="https://i.imgur.com/jZr8uf0.png">
+        <h1 id="title"><a href="popup.html" target="_blank">JustIn Time</a></h1>
+    </div>
+
+    <!-- background of popup -->
+    <div id="background">
+        <h2 class="subheader">Most Visited Apps</h2>
+
+        <!-- first most visited app -->
+        <div class="circle">
+            <h3 class="hours">10 hrs</h3>
+        </div>
+        <div class="rectangle">
+            <h3 class="apps">YouTube</h3>
+        </div>
+
+        <!-- second most visited app -->
+        <div class="circle2">
+            <h3 class="hours">8 hrs</h3>
+        </div>
+        <div class="rectangle2">
+            <h3 class="apps">Netflix</h3>
+        </div>
+
+        <!-- third most visited app -->
+        <div class="circle">
+            <h3 class="hours">5 hrs</h3>
+        </div>
+        <div class="rectangle">
+            <h3 class="apps">Canvas</h3>
+        </div>
+
+        <!-- horizontal lines to connect the hours and app -->
+        <div id="line1">─</div>
+        <div id="line2">─</div>
+        <div id="line3">─</div>
+
+        <h2 class="subheader">Tips And Motivation</h2>
+
+        <div class="tam-box">
+            <h3 class="tam">Turn your computer off for an hour</h3>
+        </div>
+
+        <br>
+
+        <div class="tam-box">
+            <h3 class="tam">Put your computer out of your sight</h3>
+        </div>
+
+        <br>
+
+        <div class="tam-box">
+            <h3 class="tam">Take a nape so you can rest your eyes</h3>
         </div>
     </div>
+
 </body>
 
 </html>
