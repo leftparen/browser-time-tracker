@@ -154,14 +154,10 @@
             font-size: 13px;
         }
     </style>
-
-    <script src="popup.js"></script>
-    <script src="content.js"></script>
     <script src="background.js"></script>
 </head>
 
 <body>
-
     <!-- top of popup -->
     <div id="header">
         <img id="logo" src="https://i.imgur.com/jZr8uf0.png">
@@ -177,7 +173,7 @@
             <h3 class="hours">10 hrs</h3>
         </div>
         <div class="rectangle">
-            <h3 class="apps">YouTube</h3>
+            <h3 id="websiteOne" class="apps">YouTube</h3>
         </div>
 
         <!-- second most visited app -->
@@ -216,10 +212,13 @@
         <br>
 
         <div class="tam-box">
-            <h3 class="tam">Take a nape so you can rest your eyes</h3>
+            <h3 class="tam">Take a nap so you can rest your eyes</h3>
         </div>
     </div>
 
 </body>
+
+<!-- Needs to be here for some reason? Issue?-->
+<script src="popup.js"></script>
 
 </html>
