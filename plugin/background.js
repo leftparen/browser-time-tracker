@@ -1,5 +1,5 @@
-let initialDate = new Date();
 var websiteDict = {};
+var sortedWebDict = [];
 
 // Detects when user clicks off of window
 chrome.windows.onFocusChanged.addListener(function(windowId){
@@ -23,6 +23,7 @@ chrome.tabs.onActivated.addListener(processSiteChange);
 
 // Process current site
 function processSiteChange() {
+
     // Gets url and hostname everytime user changes websites
     chrome.tabs.query({"active": true}, function(tabs) {
         let url = tabs[0].url;
@@ -54,15 +55,17 @@ function processSiteChange() {
             }
             localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
         }
-        var sortedWebDict = Object.keys(websiteDict).map(function (key) {
+
+        // Sorting the array based on their values (time spent on a site)
+        sortedWebDict = Object.keys(websiteDict).map(function (key) {
             return [key, websiteDict[key]];
         });
-
         sortedWebDict.sort(function(first, second) {
             return second[1] - first[1];
           });
         console.log(sortedWebDict);
-        console.log(sortedWebDict.slice(0,5));
-        //console.log(websiteDict);
+
+        // Storing array so popup.js can use it. Find more efficient way?
+        localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
     });
 }

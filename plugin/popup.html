@@ -155,6 +155,7 @@
         }
     </style>
     <script src="background.js"></script>
+    <script src="popup.js"></script>
 </head>
 
 <body>
@@ -170,26 +171,26 @@
 
         <!-- first most visited app -->
         <div class="circle">
-            <h3 class="hours">10 hrs</h3>
+            <h3 id="timeOnSiteOne" class="hours">10 hrs</h3>
         </div>
         <div class="rectangle">
-            <h3 id="websiteOne" class="apps">YouTube</h3>
+            <h3 id="siteOne" class="apps">YouTube</h3>
         </div>
 
         <!-- second most visited app -->
         <div class="circle2">
-            <h3 class="hours">8 hrs</h3>
+            <h3 id="timeOnSiteTwo" class="hours">8 hrs</h3>
         </div>
         <div class="rectangle2">
-            <h3 class="apps">Netflix</h3>
+            <h3 id="siteTwo" class="apps">Netflix</h3>
         </div>
 
         <!-- third most visited app -->
         <div class="circle">
-            <h3 class="hours">5 hrs</h3>
+            <h3 id="timeOnSiteThree" class="hours">10</h3>
         </div>
         <div class="rectangle">
-            <h3 class="apps">Canvas</h3>
+            <h3 id="siteThree" class="apps">Walmart</h3>
         </div>
 
         <!-- horizontal lines to connect the hours and app -->
@@ -215,10 +216,6 @@
             <h3 class="tam">Take a nap so you can rest your eyes</h3>
         </div>
     </div>
-
 </body>
-
-<!-- Needs to be here for some reason? Issue?-->
-<script src="popup.js"></script>
 
 </html>

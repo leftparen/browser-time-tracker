@@ -1,21 +1,16 @@
-// Storage mockup
-window.onload = function() {
-  document.getElementById('save').onclick = function() {
-    var value = document.getElementById('saveLine').value;
-    //alert(value);
+// The popup works. Display shows 0.0001 sometimes
+// because the array hasn't been sorted at that particular moment.
+// Therefore, the newest entry is always first, or in array[0][1].
 
-    // Storing user input
-    chrome.storage.sync.set({'myLine': value}, function() {
-      alert('Success!');
-    });
-  }
+let sortedDict = JSON.parse(localStorage.getItem('sortedWebDict'));
 
-  // Retrieving user input
-  document.getElementById('get').onclick = function() {
-    chrome.storage.sync.get('myLine', function(data) {
-      alert(data.myLine);
-    })
-  }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('siteOne').innerHTML = sortedDict[0][0];
+    document.getElementById('timeOnSiteOne').innerHTML = sortedDict[0][1];
 
-document.getElementById("websiteOne").innerHTML = "test";
+    document.getElementById('siteTwo').innerHTML = sortedDict[1][0];
+    document.getElementById('timeOnSiteTwo').innerHTML = sortedDict[1][1];
+
+    document.getElementById('siteThree').innerHTML = sortedDict[2][0];
+    document.getElementById('timeOnSiteThree').innerHTML = sortedDict[2][1];
+ });
