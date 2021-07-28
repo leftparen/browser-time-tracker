@@ -153,6 +153,10 @@
             opacity: .7;
             font-size: 13px;
         }
+
+        #tam-div {
+            margin-top: 50px;
+        }
     </style>
     <script src="background.js"></script>
     <script src="popup.js"></script>
@@ -171,26 +175,26 @@
 
         <!-- first most visited app -->
         <div class="circle">
-            <h3 id="timeOnSiteOne" class="hours">10 hrs</h3>
+            <h3 id="timeOnSiteOne" class="hours">--</h3>
         </div>
         <div class="rectangle">
-            <h3 id="siteOne" class="apps">YouTube</h3>
+            <h3 id="siteOne" class="apps">--</h3>
         </div>
 
         <!-- second most visited app -->
         <div class="circle2">
-            <h3 id="timeOnSiteTwo" class="hours">8 hrs</h3>
+            <h3 id="timeOnSiteTwo" class="hours">--</h3>
         </div>
         <div class="rectangle2">
-            <h3 id="siteTwo" class="apps">Netflix</h3>
+            <h3 id="siteTwo" class="apps">--</h3>
         </div>
 
         <!-- third most visited app -->
         <div class="circle">
-            <h3 id="timeOnSiteThree" class="hours">10</h3>
+            <h3 id="timeOnSiteThree" class="hours">--</h3>
         </div>
         <div class="rectangle">
-            <h3 id="siteThree" class="apps">Walmart</h3>
+            <h3 id="siteThree" class="apps">--</h3>
         </div>
 
         <!-- horizontal lines to connect the hours and app -->
@@ -198,22 +202,24 @@
         <div id="line2">─</div>
         <div id="line3">─</div>
 
-        <h2 class="subheader">Tips And Motivation</h2>
+        <div id="tam-div">
+            <h2 class="subheader">Tips And Motivation</h2>
 
-        <div class="tam-box">
-            <h3 class="tam">Turn your computer off for an hour</h3>
-        </div>
+            <div class="tam-box">
+                <h3 class="tam">Turn your computer off for an hour</h3>
+            </div>
 
-        <br>
+            <br>
 
-        <div class="tam-box">
-            <h3 class="tam">Put your computer out of your sight</h3>
-        </div>
+            <div class="tam-box">
+                <h3 class="tam">Put your computer out of sight</h3>
+            </div>
 
-        <br>
+            <br>
 
-        <div class="tam-box">
-            <h3 class="tam">Take a nap so you can rest your eyes</h3>
+            <div class="tam-box">
+                <h3 class="tam">Take a nap to rest your eyes</h3>
+            </div>
         </div>
     </div>
 </body>
