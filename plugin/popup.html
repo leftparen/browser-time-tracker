@@ -40,7 +40,7 @@
         #background {
             background-color: #d5ebf2;
             width: 350px;
-            height: 680px;
+            height: 650px;
         }
 
         .subheader {
@@ -145,6 +145,7 @@
 
         .tam-box {
             border: 1px solid black;
+            height: 50px;
             width: 300px;
             display: flex;
             justify-content: center;
@@ -156,6 +157,28 @@
 
         #tam-div {
             margin-top: 50px;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: center;
+            margin-left: -4px;
+        }
+
+        #btn {
+            height: 50px;
+            width: 302px;
+            font-size: 15px;
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+        }
+
+        #btn:hover {
+            background-color: white;
+            opacity: .7;
+            color: black;
+            cursor: pointer;
         }
     </style>
     <script src="background.js"></script>
@@ -175,26 +198,26 @@
 
         <!-- first most visited app -->
         <div class="circle">
-            <h2 id="timeOnSiteOne" class="hours">--</h2>
+            <h3 id="timeOnSiteOne" class="hours">--</h3>
         </div>
         <div class="rectangle">
-            <h2 id="siteOne" class="apps">--</h2>
+            <h3 id="siteOne" class="apps">--</h3>
         </div>
 
         <!-- second most visited app -->
         <div class="circle2">
-            <h2 id="timeOnSiteTwo" class="hours">--</h2>
+            <h3 id="timeOnSiteTwo" class="hours">--</h3>
         </div>
         <div class="rectangle2">
-            <h2 id="siteTwo" class="apps">--</h2>
+            <h3 id="siteTwo" class="apps">--</h3>
         </div>
 
         <!-- third most visited app -->
         <div class="circle">
-            <h2 id="timeOnSiteThree" class="hours">--</h2>
+            <h3 id="timeOnSiteThree" class="hours">--</h3>
         </div>
         <div class="rectangle">
-            <h2 id="siteThree" class="apps">--</h2>
+            <h3 id="siteThree" class="apps">--</h3>
         </div>
 
         <!-- horizontal lines to connect the hours and app -->
@@ -206,20 +229,21 @@
             <h2 class="subheader">Tips And Motivation</h2>
 
             <div class="tam-box">
-                <h3 class="tam">Turn your computer off for an hour</h3>
+                <h3 class="tam" id="output1">Go on a walk or take a drive.</h3>
             </div>
 
             <br>
 
             <div class="tam-box">
-                <h3 class="tam">Put your computer out of sight</h3>
+                <h3 class="tam" id="output2">No great thing is created suddenly.</h3>
             </div>
 
             <br>
 
-            <div class="tam-box">
-                <h3 class="tam">Take a nap to rest your eyes</h3>
+            <div class="btn-box">
+                <button id="btn">Generate Tips and Motivation</button>
             </div>
+
         </div>
     </div>
 </body>

@@ -1,3 +1,5 @@
+var sortedWebDict = [];
+
 // Checks to see if an object to collect the website data
 // already exists. If not, an object is created.
 if (localStorage.getItem('websiteDict')) {
@@ -8,15 +10,13 @@ if (localStorage.getItem('websiteDict')) {
     console.log('websiteDict does not exist');
 };
 
-var sortedWebDict = [];
-
 // Detects when user clicks off of window
 chrome.windows.onFocusChanged.addListener(function(windowId){
     if (windowId == chrome.windows.WINDOW_ID_NONE){
         processSiteChange();
         console.log('not active');
     }
-    else{
+    else {
         processSiteChange();
         console.log('active');
     }
@@ -37,9 +37,13 @@ function processSiteChange() {
     chrome.tabs.query({"active": true}, function(tabs) {
             if (tabs[0]) {
                 let url = tabs[0].url;
-                let urlObject = new URL(url);
-                var hostName = urlObject.hostname;
-                console.log(hostName);
+                try {
+                    let urlObject = new URL(url);
+                    var hostName = urlObject.hostname;
+                    console.log(hostName);
+                } catch(e) {
+                    console.log('could not construct a url');
+                }
             };
             if (!(hostName in websiteDict)) {
                 websiteDict[hostName] = 0;
@@ -76,16 +80,21 @@ function processSiteChange() {
             localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
 
             // Sorting the array based on their values (time spent on a site)
-            sortedWebDict = Object.keys(websiteDict).map(function (key) {
-                return [key, websiteDict[key]];
-            });
-            sortedWebDict.sort(function(first, second) {
-                return second[1] - first[1];
-            });
-            console.log(sortedWebDict);
+            sortData(websiteDict);
 
             // Storing array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
             //localStorage.clear();
     });
+};
+
+function sortData(unsortedDict) {
+    sortedWebDict = Object.keys(unsortedDict).map(function (key) {
+        return [key, unsortedDict[key]];
+    });
+    sortedWebDict.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+    console.log(sortedWebDict);
+    
 };
