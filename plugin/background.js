@@ -46,23 +46,27 @@ function processSiteChange() {
                 }
             };
             if (!(hostName in websiteDict)) {
-                websiteDict[hostName] = 0;
+                websiteDict[hostName] = [0,0,0,0,0,0,0];
             }
             // If there was a last website, program gets it. If not, program stores current site as the last website
             if (localStorage.getItem('lastWebsite') != null) {
                 let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
                 if (!(lastWebsite.website in websiteDict)) {
-                    websiteDict[lastWebsite.website] = 0;
+                    websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
                 }
                 // When user closes Chrome, program attempts to put
                 // the amount of time the user is off into something.
                 // This if statement removes it from the dictionary.
-                if (typeof lastWebsite.website == 'undefined') {
+                /* if (typeof lastWebsite.website == 'undefined') {
                     delete websiteDict[lastWebsite.website];
-                }
+                } */
+
                 let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
                 console.log(secondsPassed);
-                websiteDict[lastWebsite.website] = secondsPassed + websiteDict[lastWebsite.website];
+
+                const currentDate = new Date();
+                const dayOfTheWeek = currentDate.getDay();
+                websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
                 lastWebsite = {
                     website: hostName,
                     timeStamp: Date.now()
@@ -80,7 +84,7 @@ function processSiteChange() {
             localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
 
             // Sorting the array based on their values (time spent on a site)
-            sortData(websiteDict);
+            //sortData(websiteDict);
 
             // Storing array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
@@ -96,5 +100,4 @@ function sortData(unsortedDict) {
         return second[1] - first[1];
     });
     console.log(sortedWebDict);
-    
 };
