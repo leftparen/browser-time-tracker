@@ -1,3 +1,5 @@
+// Checks to see if an object to collect the website data
+// already exists. If not, an object is created.
 if (localStorage.getItem('websiteDict')) {
     var websiteDict = JSON.parse(localStorage.getItem('websiteDict'));
     console.log('websiteDict does exist');
@@ -33,20 +35,26 @@ function processSiteChange() {
 
     // Gets url and hostname everytime user changes websites
     chrome.tabs.query({"active": true}, function(tabs) {
-        if (tabs[0]) {
-            let url = tabs[0].url;
-            let urlObject = new URL(url);
-            let hostName = urlObject.hostname;
-            console.log(hostName);
+            if (tabs[0]) {
+                let url = tabs[0].url;
+                let urlObject = new URL(url);
+                var hostName = urlObject.hostname;
+                console.log(hostName);
+            };
             if (!(hostName in websiteDict)) {
                 websiteDict[hostName] = 0;
             }
-
             // If there was a last website, program gets it. If not, program stores current site as the last website
             if (localStorage.getItem('lastWebsite') != null) {
                 let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
-                if (!(lastWebsite.website in websiteDict)){
+                if (!(lastWebsite.website in websiteDict)) {
                     websiteDict[lastWebsite.website] = 0;
+                }
+                // When user closes Chrome, program attempts to put
+                // the amount of time the user is off into something.
+                // This if statement removes it from the dictionary.
+                if (typeof lastWebsite.website == 'undefined') {
+                    delete websiteDict[lastWebsite.website];
                 }
                 let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
                 console.log(secondsPassed);
@@ -78,6 +86,6 @@ function processSiteChange() {
 
             // Storing array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
-        };
+            //localStorage.clear();
     });
-}
+};

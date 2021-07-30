@@ -6,11 +6,11 @@ let sortedDict = JSON.parse(localStorage.getItem('sortedWebDict'));
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('siteOne').innerHTML = sortedDict[0][0];
-    document.getElementById('timeOnSiteOne').innerHTML = sortedDict[0][1];
+    document.getElementById('timeOnSiteOne').innerHTML = Math.round(sortedDict[0][1]);
 
     document.getElementById('siteTwo').innerHTML = sortedDict[1][0];
-    document.getElementById('timeOnSiteTwo').innerHTML = sortedDict[1][1];
+    document.getElementById('timeOnSiteTwo').innerHTML = Math.round(sortedDict[1][1]);
 
     document.getElementById('siteThree').innerHTML = sortedDict[2][0];
-    document.getElementById('timeOnSiteThree').innerHTML = sortedDict[2][1];
+    document.getElementById('timeOnSiteThree').innerHTML = Math.round(sortedDict[2][1]);
  });
