@@ -1,7 +1,7 @@
 {
-    "name": "Plugin",
+    "name": "JustIn Time",
     "manifest_version": 2,
-    "description": "Quick launch Plugin",
+    "description": "This Chrome extension tracks the amount of time a user spends on each website they visit.",
     "version": "1.0.0",
     "icons": { "128": "icon_128.png"},
     "background": {

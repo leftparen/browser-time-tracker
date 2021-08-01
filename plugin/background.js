@@ -1,7 +1,26 @@
 var sortedWebDict = [];
 
-// Checks to see if an object to collect the website data
-// already exists. If not, an object is created.
+// Resets data every seven, or more, days
+let currentDate = new Date();
+if (localStorage.getItem('lastReset')) {
+    let lastReset = JSON.parse(localStorage.getItem('lastReset'));
+    if (currentDate >= lastReset.date + 7) {
+        localStorage.clear();
+        lastReset.date = new Date();
+        localStorage.setItem('lastReset', JSON.stringify(lastReset));
+        console.log('Last reset was more than a week ago');
+    } else {
+        console.log('Last reset was less than a week ago');
+    }
+} else {
+    let lastReset = {
+        date: new Date()
+    }
+    localStorage.setItem('lastReset', JSON.stringify(lastReset));
+    console.log('A reset date does not exist');
+}
+
+// Checks to see if an object to collect the website data exists
 if (localStorage.getItem('websiteDict')) {
     var websiteDict = JSON.parse(localStorage.getItem('websiteDict'));
     console.log('websiteDict does exist');
@@ -44,7 +63,7 @@ function processSiteChange() {
                 } catch(e) {
                     console.log('could not construct a url');
                 }
-            };
+            }
             if (!(hostName in websiteDict)) {
                 websiteDict[hostName] = [0,0,0,0,0,0,0];
             }
@@ -54,19 +73,18 @@ function processSiteChange() {
                 if (!(lastWebsite.website in websiteDict)) {
                     websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
                 }
-                // When user closes Chrome, program attempts to put
-                // the amount of time the user is off into something.
-                // This if statement removes it from the dictionary.
-                /* if (typeof lastWebsite.website == 'undefined') {
-                    delete websiteDict[lastWebsite.website];
-                } */
 
                 let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
                 console.log(secondsPassed);
-
                 const currentDate = new Date();
                 const dayOfTheWeek = currentDate.getDay();
                 websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
+
+                // Data for time offline is deleted
+                if (typeof lastWebsite.website == 'undefined') {
+                    delete websiteDict[lastWebsite.website];
+                }
+
                 lastWebsite = {
                     website: hostName,
                     timeStamp: Date.now()
@@ -86,12 +104,14 @@ function processSiteChange() {
             // Sorting the array based on their values (time spent on a site)
             //sortData(websiteDict);
 
-            // Storing array so popup.js can use it. Find more efficient way?
+            // Storing the array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
+
             //localStorage.clear();
     });
 };
 
+// Needs to be updated
 function sortData(unsortedDict) {
     sortedWebDict = Object.keys(unsortedDict).map(function (key) {
         return [key, unsortedDict[key]];
