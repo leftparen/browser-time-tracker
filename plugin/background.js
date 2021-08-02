@@ -1,10 +1,11 @@
 var sortedWebDict = [];
 
-// Resets data every seven, or more, days
+// Resets data every sunday or every seven, or more, days
 let currentDate = new Date();
 if (localStorage.getItem('lastReset')) {
     let lastReset = JSON.parse(localStorage.getItem('lastReset'));
-    if (currentDate >= lastReset.date + 7) {
+    let lastResetDate = new Date(lastReset.date);
+    if (currentDate > addDays(lastResetDate, 7) || (currentDate.getDay() == 0 && !datesAreOnSameDay(lastResetDate, currentDate))) {
         localStorage.clear();
         lastReset.date = new Date();
         localStorage.setItem('lastReset', JSON.stringify(lastReset));
@@ -13,21 +14,24 @@ if (localStorage.getItem('lastReset')) {
         console.log('Last reset was less than a week ago');
     }
 } else {
+    let weekStart = new Date();
+    weekStart.setHours(0,0,0,0);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     let lastReset = {
-        date: new Date()
+        date: weekStart
     }
     localStorage.setItem('lastReset', JSON.stringify(lastReset));
-    console.log('A reset date does not exist');
+    console.log('New reset day: ' + weekStart);
 }
 
 // Checks to see if an object to collect the website data exists
 if (localStorage.getItem('websiteDict')) {
     var websiteDict = JSON.parse(localStorage.getItem('websiteDict'));
-    console.log('websiteDict does exist');
+    console.log('websiteDict exists');
 } else {
     var websiteDict = {};
     console.log('websiteDict does not exist');
-};
+}
 
 // Detects when user clicks off of window
 chrome.windows.onFocusChanged.addListener(function(windowId){
@@ -42,10 +46,7 @@ chrome.windows.onFocusChanged.addListener(function(windowId){
 });
 
 // Detects when user changes sites within a tab
-chrome.tabs.onUpdated.addListener(function() {
-    processSiteChange();
-});
-
+chrome.tabs.onUpdated.addListener(processSiteChange);
 // Detects when user changes tabs within a window
 chrome.tabs.onActivated.addListener(processSiteChange);
 
@@ -97,18 +98,16 @@ function processSiteChange() {
                 }
                 localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
             }
+            // Sorting the array based on their values (time spent on a site)
+            //sortData(websiteDict);
 
             // Storing the website data
             localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
 
-            // Sorting the array based on their values (time spent on a site)
-            //sortData(websiteDict);
-
             // Storing the array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
-
-            //localStorage.clear();
     });
+    //localStorage.clear();
 };
 
 // Needs to be updated
@@ -120,4 +119,16 @@ function sortData(unsortedDict) {
         return second[1] - first[1];
     });
     console.log(sortedWebDict);
+};
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+};
+
+function datesAreOnSameDay(first, second) {
+    return first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
 };
