@@ -1,13 +1,13 @@
 var sortedWebDict = [];
 
-// Resets data every sunday or every seven, or more, days
-let currentDate = new Date();
+// Resets data every Sunday or every seven, or more, days
 if (localStorage.getItem('lastReset')) {
+    let currentDate = new Date();
     let lastReset = JSON.parse(localStorage.getItem('lastReset'));
     let lastResetDate = new Date(lastReset.date);
     if (currentDate > addDays(lastResetDate, 7) || (currentDate.getDay() == 0 && !datesAreOnSameDay(lastResetDate, currentDate))) {
         localStorage.clear();
-        lastReset.date = new Date();
+        lastReset.date = currentDate;
         localStorage.setItem('lastReset', JSON.stringify(lastReset));
         console.log('Last reset was more than a week ago');
     } else {
@@ -99,7 +99,7 @@ function processSiteChange() {
                 localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
             }
             // Sorting the array based on their values (time spent on a site)
-            //sortData(websiteDict);
+            sortData(websiteDict);
 
             // Storing the website data
             localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
@@ -110,10 +110,10 @@ function processSiteChange() {
     //localStorage.clear();
 };
 
-// Needs to be updated
 function sortData(unsortedDict) {
-    sortedWebDict = Object.keys(unsortedDict).map(function (key) {
-        return [key, unsortedDict[key]];
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    sortedWebDict = Object.keys(unsortedDict).map(function(key) {
+        return [key, average(unsortedDict[key])];
     });
     sortedWebDict.sort(function(first, second) {
         return second[1] - first[1];
