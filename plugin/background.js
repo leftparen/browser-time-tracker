@@ -9,6 +9,7 @@ chrome.tabs.onActivated.addListener(processSiteChange);
 
 // Resets data every Sunday or every seven, or more, days
 if (localStorage.getItem('lastReset')) {
+    //localStorage.clear();
     let currentDate = new Date();
     let lastReset = JSON.parse(localStorage.getItem('lastReset'));
     let lastResetDate = new Date(lastReset.date);
@@ -42,62 +43,55 @@ if (localStorage.getItem('websiteDict')) {
 
 // Process current site
 function processSiteChange() {
-
-    // Gets url and hostname everytime user changes websites
+    // Gets url and hostname of current tab
     chrome.tabs.query({"active": true}, function(tabs) {
-            if (tabs[0]) {
-                let url = tabs[0].url;
-                try {
+                if (tabs[0]) {
+                    let url = tabs[0].url;
+                    // Error here
                     let urlObject = new URL(url);
                     var hostName = urlObject.hostname;
-                    console.log(hostName);
-                } catch(e) {
-                    console.log('could not construct a url');
+                };
+                if (!(hostName in websiteDict)) {
+                    websiteDict[hostName] = [0,0,0,0,0,0,0];
                 }
-            }
-            if (!(hostName in websiteDict)) {
-                websiteDict[hostName] = [0,0,0,0,0,0,0];
-            }
-            // If there was a last website, program gets it. If not, program stores current site as the last website
-            if (localStorage.getItem('lastWebsite') != null) {
-                let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
-                if (!(lastWebsite.website in websiteDict)) {
-                    websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
+                // If there was a last website, program gets it. If not, program stores current site as the last website
+                if (localStorage.getItem('lastWebsite') != null) {
+                    let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
+                    if (!(lastWebsite.website in websiteDict)) {
+                        websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
+                    }
+                    let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
+                    const currentDate = new Date();
+                    const dayOfTheWeek = currentDate.getDay();
+                    websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
+                    console.log(secondsPassed + ' added to ' + lastWebsite.website);
+    
+                    // Data for time offline is reset
+                    if (typeof lastWebsite.website == 'undefined') {
+                        websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
+                    }
+    
+                    lastWebsite = {
+                        website: hostName,
+                        timeStamp: Date.now()
+                    }
+                    localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
+                } else {
+                    let lastWebsite = {
+                        website: hostName,
+                        timeStamp: Date.now()
+                    }
+                    localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
                 }
-
-                let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
-                console.log(secondsPassed);
-                const currentDate = new Date();
-                const dayOfTheWeek = currentDate.getDay();
-                websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
-
-                // Data for time offline is deleted
-                if (typeof lastWebsite.website == 'undefined') {
-                    delete websiteDict[lastWebsite.website];
-                }
-
-                lastWebsite = {
-                    website: hostName,
-                    timeStamp: Date.now()
-                }
-                localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
-            } else {
-                let lastWebsite = {
-                    website: hostName,
-                    timeStamp: Date.now()
-                }
-                localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
-            }
-            // Sorting the array based on their values (time spent on a site)
-            sortData(websiteDict);
-
-            // Storing the website data
-            localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
-            
-            // Storing the array so popup.js can use it. Find more efficient way?
-            localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
+                // Sorting the array based on their values (time spent on a site)
+                sortData(websiteDict);
+    
+                // Storing the website data
+                localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
+                
+                // Storing the array so popup.js can use it. Find more efficient way?
+                localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
     });
-    //localStorage.clear();
 };
 
 function sortData(unsortedDict) {

@@ -1,7 +1,7 @@
 {
     "name": "JustIn Time",
     "manifest_version": 2,
-    "description": "This Chrome extension tracks the amount of time a user spends on each website they visit.",
+    "description": "Extension tracks amount of time user spends on each website per week",
     "version": "1.0.0",
     "icons": { "128": "icon_128.png"},
     "background": {
@@ -19,10 +19,9 @@
         "default_popup": "popup.html"
     },
     "permissions": [
-        "activeTab",
-        "declarativeContent",
-        "storage", 
         "tabs",
+        "activeTab",
+        "storage", 
         "webNavigation"
     ]
 }

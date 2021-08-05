@@ -15,14 +15,22 @@ let quotesList = [
 ];
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('siteOne').innerHTML = sortedDict[0][0];
-    document.getElementById('timeOnSiteOne').innerHTML = convertTime(sortedDict[0][1]);
-
-    document.getElementById('siteTwo').innerHTML = sortedDict[1][0];
-    document.getElementById('timeOnSiteTwo').innerHTML = convertTime(sortedDict[1][1]);
-
-    document.getElementById('siteThree').innerHTML = sortedDict[2][0];
-    document.getElementById('timeOnSiteThree').innerHTML = convertTime(sortedDict[2][1]);
+    if (sortedDict[0][0]) {
+        document.getElementById('siteOne').innerHTML = sortedDict[0][0];
+        document.getElementById('timeOnSiteOne').innerHTML = convertTime(sortedDict[0][1]);
+    }
+    if (sortedDict[1][0]) {
+        document.getElementById('siteTwo').innerHTML = sortedDict[1][0];
+        document.getElementById('timeOnSiteTwo').innerHTML = convertTime(sortedDict[1][1]);
+    }
+    if (sortedDict[2][0]) {
+        document.getElementById('siteThree').innerHTML = sortedDict[2][0];
+        document.getElementById('timeOnSiteThree').innerHTML = convertTime(sortedDict[2][1]);
+    }
+    if (sortedDict[3][0]) {
+        document.getElementById('siteFour').innerHTML = sortedDict[3][0];
+        document.getElementById('timeOnSiteFour').innerHTML = convertTime(sortedDict[3][1]);
+    }
 
     let btn = document.getElementById('btn');
     let output1 = document.getElementById('output1');
@@ -44,8 +52,8 @@ function convertTime(secondsPassed){
     let minutes = Math.round(Math.floor(secondsPassed / 60));
     let seconds = Math.round(secondsPassed % 60);
 
-    minutes = String(minutes).padStart(2, "0");
     hours = String(hours).padStart(2, "0");
+    minutes = String(minutes).padStart(2, "0");
     seconds = String(seconds).padStart(2, "0");
 
     return hours + ":" + minutes + ":" + seconds;
