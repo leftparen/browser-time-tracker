@@ -1,7 +1,14 @@
 var sortedWebDict = [];
 
 // Detects when user clicks off of window
-chrome.windows.onFocusChanged.addListener(processSiteChange);
+chrome.windows.onFocusChanged.addListener(function(windowId){
+    if (windowId == chrome.windows.WINDOW_ID_NONE){
+        processSiteChange(false);
+    }
+    else{
+        processSiteChange(true);
+    }
+});
 // Detects when user changes sites within a tab
 chrome.tabs.onUpdated.addListener(processSiteChange);
 // Detects when user changes tabs within a window
@@ -42,55 +49,60 @@ if (localStorage.getItem('websiteDict')) {
 }
 
 // Process current site
-function processSiteChange() {
+function processSiteChange(isWindowActive) {
     // Gets url and hostname of current tab
     chrome.tabs.query({"active": true}, function(tabs) {
-                if (tabs[0]) {
-                    let url = tabs[0].url;
-                    // Error here
-                    let urlObject = new URL(url);
-                    var hostName = urlObject.hostname;
-                };
-                if (!(hostName in websiteDict)) {
-                    websiteDict[hostName] = [0,0,0,0,0,0,0];
-                }
-                // If there was a last website, program gets it. If not, program stores current site as the last website
-                if (localStorage.getItem('lastWebsite') != null) {
-                    let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
-                    if (!(lastWebsite.website in websiteDict)) {
-                        websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
-                    }
-                    let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
-                    const currentDate = new Date();
-                    const dayOfTheWeek = currentDate.getDay();
-                    websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
-                    console.log(secondsPassed + ' added to ' + lastWebsite.website);
-    
-                    // Data for time offline is reset
-                    if (typeof lastWebsite.website == 'undefined') {
-                        websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
-                    }
-    
-                    lastWebsite = {
-                        website: hostName,
-                        timeStamp: Date.now()
-                    }
-                    localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
-                } else {
-                    let lastWebsite = {
-                        website: hostName,
-                        timeStamp: Date.now()
-                    }
-                    localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
-                }
-                // Sorting the array based on their values (time spent on a site)
-                sortData(websiteDict);
-    
-                // Storing the website data
-                localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
-                
-                // Storing the array so popup.js can use it. Find more efficient way?
-                localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
+        if (tabs[0] && isWindowActive) {
+            let url = tabs[0].url;
+            try {
+                let urlObject = new URL(url);
+                var hostName = urlObject.hostname;
+            } catch(e) {
+                console.log('could not construct url');
+            }
+        } else {
+            var hostName = 'undefined';
+        }
+        if (!(hostName in websiteDict)) {
+            websiteDict[hostName] = [0,0,0,0,0,0,0];
+        }
+        // If there was a last website, program gets it. If not, program stores current site as the last website
+        if (localStorage.getItem('lastWebsite') != null) {
+            let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
+            if (!(lastWebsite.website in websiteDict)) {
+                websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
+            }
+            let secondsPassed = (Date.now() - lastWebsite.timeStamp) / 1000;
+            const currentDate = new Date();
+            const dayOfTheWeek = currentDate.getDay();
+            websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
+            console.log(secondsPassed + ' added to ' + lastWebsite.website);
+
+            // Data for time offline is reset
+            if (lastWebsite.website == 'undefined') {
+                websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
+            }
+
+            lastWebsite = {
+                website: hostName,
+                timeStamp: Date.now()
+            }
+            localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
+        } else {
+            let lastWebsite = {
+                website: hostName,
+                timeStamp: Date.now()
+            }
+            localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
+        }
+        // Sorting the array based on their values (time spent on a site)
+        sortData(websiteDict);
+
+        // Storing the website data
+        localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
+        
+        // Storing the array so popup.js can use it. Find more efficient way?
+        localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
     });
 };
 
