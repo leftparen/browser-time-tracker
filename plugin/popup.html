@@ -16,7 +16,8 @@
         #header {
             background-color: #add8e6;
             width: 350px;
-            margin-bottom: -25px;
+            height: 50px;
+            margin-bottom: -30px;
         }
 
         #logo {
@@ -40,7 +41,7 @@
         #background {
             background-color: #d5ebf2;
             width: 350px;
-            height: 650px;
+            height: 790px;
         }
 
         .subheader {
@@ -56,7 +57,7 @@
         .subheader:after {
             content: "";
             flex: 1 1;
-            border-bottom: 2px solid black;
+            border-bottom: 2px solid #000;
             margin: auto;
         }
 
@@ -70,7 +71,7 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
-            border: 1px black solid;
+            border: 2px #8aacb8 solid;
         }
 
         .circle2 {
@@ -84,12 +85,12 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
-            border: 1px black solid;
+            border: 2px #8aacb8 solid;
         }
 
         .hours {
             display: flex;
-            padding-top: 20px;
+            padding-top: 25px;
             justify-content: center;
         }
 
@@ -102,7 +103,7 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
-            border: 1px black solid;
+            border: 2px #8aacb8 solid;
         }
 
         .rectangle2 {
@@ -114,37 +115,45 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
-            border: 1px black solid;
+            border: 2px #8aacb8 solid;
         }
 
         .apps {
             display: flex;
             justify-content: center;
+            margin-top: 22px;
         }
 
         #line1 {
             font-size: 53px;
             margin-left: 122px;
-            margin-top: -294px;
-            color: black;
+            margin-top: -400px;
+            color: #8aacb8;
         }
 
         #line2 {
             font-size: 53px;
             margin-left: 172px;
-            margin-top: 28px;
-            color: black;
+            margin-top: 50px;
+            color: #8aacb8;
         }
 
         #line3 {
             font-size: 53px;
             margin-left: 122px;
-            margin-top: 32px;
-            color: black;
+            margin-top: 50px;
+            color: #8aacb8;
+        }
+
+        #line4 {
+            font-size: 53px;
+            margin-left: 172px;
+            margin-top: 50px;
+            color: #8aacb8;
         }
 
         .tam-box {
-            border: 1px solid black;
+            border: 1px solid #8aacb8;
             height: 50px;
             width: 300px;
             display: flex;
@@ -156,7 +165,7 @@
         }
 
         #tam-div {
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         .btn-box {
@@ -188,7 +197,7 @@
 <body>
     <!-- top of popup -->
     <div id="header">
-        <img id="logo" src="https://i.imgur.com/jZr8uf0.png">
+        <img id="logo" src="logo.png">
         <h1 id="title"><a href="popup.html" target="_blank">JustIn Time</a></h1>
     </div>
 
@@ -220,10 +229,19 @@
             <h3 id="siteThree" class="apps">--</h3>
         </div>
 
+        <!-- second most visited app -->
+        <div class="circle2">
+            <h3 id="timeOnSiteFOur" class="hours">--</h3>
+        </div>
+        <div class="rectangle2">
+            <h3 id="siteTwo" class="apps">--</h3>
+        </div>
+
         <!-- horizontal lines to connect the hours and app -->
         <div id="line1">─</div>
         <div id="line2">─</div>
         <div id="line3">─</div>
+        <div id="line4">─</div>
 
         <div id="tam-div">
             <h2 class="subheader">Tips And Motivation</h2>
