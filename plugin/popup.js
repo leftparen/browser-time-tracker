@@ -1,7 +1,3 @@
-// The popup works. Display shows 0.0001 sometimes
-// because the array hasn't been sorted at that particular moment.
-// Therefore, the newest entry is always first, or in array[0][1].
-
 let sortedDict = JSON.parse(localStorage.getItem('sortedWebDict'));
 
 let tipsList = [
@@ -43,14 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function convertTime(secondsPassed){
-    let minutesPassed = secondsPassed / 60;
-    if (minutesPassed < 1){
-        return Math.round(secondsPassed) + ' sec';
-    }
-    else if (minutesPassed < 60) {
-        return Math.round(minutesPassed) + ' mins';
-    }
-    else {
-        return Math.round(minutesPassed / 60) + ' hrs';
-    };
+    let hours = Math.round(Math.floor(secondsPassed / 3600));
+    secondsPassed %= 3600;
+    let minutes = Math.round(Math.floor(secondsPassed / 60));
+    let seconds = Math.round(secondsPassed % 60);
+
+    minutes = String(minutes).padStart(2, "0");
+    hours = String(hours).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+
+    return hours + ":" + minutes + ":" + seconds;
 };

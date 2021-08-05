@@ -1,5 +1,12 @@
 var sortedWebDict = [];
 
+// Detects when user clicks off of window
+chrome.windows.onFocusChanged.addListener(processSiteChange);
+// Detects when user changes sites within a tab
+chrome.tabs.onUpdated.addListener(processSiteChange);
+// Detects when user changes tabs within a window
+chrome.tabs.onActivated.addListener(processSiteChange);
+
 // Resets data every Sunday or every seven, or more, days
 if (localStorage.getItem('lastReset')) {
     let currentDate = new Date();
@@ -32,23 +39,6 @@ if (localStorage.getItem('websiteDict')) {
     var websiteDict = {};
     console.log('websiteDict does not exist');
 }
-
-// Detects when user clicks off of window
-chrome.windows.onFocusChanged.addListener(function(windowId){
-    if (windowId == chrome.windows.WINDOW_ID_NONE){
-        processSiteChange();
-        console.log('not active');
-    }
-    else {
-        processSiteChange();
-        console.log('active');
-    }
-});
-
-// Detects when user changes sites within a tab
-chrome.tabs.onUpdated.addListener(processSiteChange);
-// Detects when user changes tabs within a window
-chrome.tabs.onActivated.addListener(processSiteChange);
 
 // Process current site
 function processSiteChange() {
@@ -103,7 +93,7 @@ function processSiteChange() {
 
             // Storing the website data
             localStorage.setItem('websiteDict', JSON.stringify(websiteDict));
-
+            
             // Storing the array so popup.js can use it. Find more efficient way?
             localStorage.setItem('sortedWebDict', JSON.stringify(sortedWebDict));
     });
@@ -111,14 +101,12 @@ function processSiteChange() {
 };
 
 function sortData(unsortedDict) {
-    const average = (array) => array.reduce((a, b) => a + b) / array.length;
     sortedWebDict = Object.keys(unsortedDict).map(function(key) {
-        return [key, average(unsortedDict[key])];
+        return [key, unsortedDict[key].reduce((a, b) => a + b, 0)];
     });
     sortedWebDict.sort(function(first, second) {
         return second[1] - first[1];
     });
-    console.log(sortedWebDict);
 };
 
 function addDays(date, days) {
