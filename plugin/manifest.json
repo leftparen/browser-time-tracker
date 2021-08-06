@@ -6,7 +6,7 @@
     "icons": { "128": "icon_128.png"},
     "background": {
         "scripts": ["background.js"],
-        "persistent": false
+        "persistent": true
     },
     "content_scripts": [
         {
@@ -19,9 +19,6 @@
         "default_popup": "popup.html"
     },
     "permissions": [
-        "tabs",
-        "activeTab",
-        "storage", 
-        "webNavigation"
+        "tabs"
     ]
 }

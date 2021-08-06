@@ -1,7 +1,14 @@
-var sortedWebDict = [];
+let sortedWebDict = [];
 
 // Detects when user clicks off of window
-chrome.windows.onFocusChanged.addListener(processSiteChange);
+chrome.windows.onFocusChanged.addListener(function(windowId){
+    if (windowId == chrome.windows.WINDOW_ID_NONE){
+        processSiteChange(false);
+    }
+    else{
+        processSiteChange(true);
+    }
+});
 // Detects when user changes sites within a tab
 chrome.tabs.onUpdated.addListener(processSiteChange);
 // Detects when user changes tabs within a window
@@ -15,6 +22,7 @@ if (localStorage.getItem('lastReset')) {
     let lastResetDate = new Date(lastReset.date);
     if (currentDate > addDays(lastResetDate, 7) || (currentDate.getDay() == 0 && !datesAreOnSameDay(lastResetDate, currentDate))) {
         localStorage.clear();
+        sessionStorage.clear();
         lastReset.date = currentDate;
         localStorage.setItem('lastReset', JSON.stringify(lastReset));
         console.log('Last reset was more than a week ago');
@@ -42,17 +50,17 @@ if (localStorage.getItem('websiteDict')) {
 }
 
 // Process current site
-function processSiteChange() {
+function processSiteChange(isWindowActive) {
     // Gets url and hostname of current tab
     chrome.tabs.query({"active": true}, function(tabs) {
-        if (tabs.length > 0 && tabs[0] != null) {
+        if (tabs[0] && isWindowActive) {
             let url = tabs[0].url;
             try {
                 let urlObject = new URL(url);
                 var hostName = urlObject.hostname;
             } catch(e) {
                 console.log('could not construct url');
-            }
+            };
         } else {
             var hostName = 'undefined';
         }
