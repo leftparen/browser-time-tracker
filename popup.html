@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>JustIn Time</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <style>
+        #header {
+            background-color: #add8e6;
+            width: 350px;
+            height: 50px;
+            margin-bottom: -30px;
+        }
+
+        #logo {
+            display: flex;
+            width: 30px;
+            padding: 5px;
+            margin-bottom: -75px;
+        }
+
+        #title {
+            padding: 10px;
+            margin-top: 25px;
+            text-align: right;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #background {
+            background-color: #d5ebf2;
+            width: 350px;
+            height: 800px;
+        }
+
+        .subheader {
+            padding-top: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .subheader:before,
+        .subheader:after {
+            content: "";
+            flex: 1 1;
+            border-bottom: 2px solid #000;
+            margin: auto;
+        }
+
+        .circle {
+            background-color: white;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            margin: 20px;
+            opacity: .7;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 2px #8aacb8 solid;
+        }
+
+        .circle2 {
+            background-color: white;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            margin: 20px;
+            margin-left: 225px;
+            opacity: .7;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 2px #8aacb8 solid;
+        }
+
+        .hours {
+            display: flex;
+            padding-top: 25px;
+            justify-content: center;
+        }
+
+        .rectangle {
+            background-color: white;
+            opacity: .7;
+            width: 150px;
+            height: 65px;
+            margin: -100px 0px 0px 175px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 2px #8aacb8 solid;
+        }
+
+        .rectangle2 {
+            background-color: white;
+            opacity: .7;
+            width: 150px;
+            height: 65px;
+            margin: -100px 0px 0px 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border: 2px #8aacb8 solid;
+        }
+
+        .apps {
+            display: flex;
+            justify-content: center;
+            margin-top: 22px;
+        }
+
+        #line1 {
+            font-size: 53px;
+            margin-left: 122px;
+            margin-top: -450px;
+            color: #8aacb8;
+        }
+
+        #line2 {
+            font-size: 53px;
+            margin-left: 172px;
+            margin-top: 50px;
+            color: #8aacb8;
+        }
+
+        #line3 {
+            font-size: 53px;
+            margin-left: 122px;
+            margin-top: 50px;
+            color: #8aacb8;
+        }
+
+        #line4 {
+            font-size: 53px;
+            margin-left: 172px;
+            margin-top: 50px;
+            color: #8aacb8;
+        }
+
+        .tam-box {
+            border: 1px solid #8aacb8;
+            height: 50px;
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            margin-left: 22px;
+            background-color: white;
+            opacity: .7;
+            font-size: 13px;
+        }
+
+        #tam-div {
+            margin-top: 70px;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: center;
+            margin-left: -4px;
+        }
+
+        #btn {
+            height: 50px;
+            width: 302px;
+            font-size: 15px;
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+        }
+
+        #btn:hover {
+            background-color: white;
+            opacity: .7;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+    <script src="background.js"></script>
+    <script src="popup.js"></script>
+</head>
+
+<body>
+    <!-- top of popup -->
+    <div id="header">
+        <img id="logo" src="logo.png">
+        <h1 id="title"><a href="popup.html" target="_blank">JustIn Time</a></h1>
+    </div>
+
+    <!-- background of popup -->
+    <div id="background">
+        <h2 class="subheader">Websites Visited This Week</h2>
+
+        <!-- first most visited app -->
+        <div class="circle">
+            <h3 id="timeOnSiteOne" class="hours">--</h3>
+        </div>
+        <div class="rectangle">
+            <h3 id="siteOne" class="apps">--</h3>
+        </div>
+
+        <!-- second most visited app -->
+        <div class="circle2">
+            <h3 id="timeOnSiteTwo" class="hours">--</h3>
+        </div>
+        <div class="rectangle2">
+            <h3 id="siteTwo" class="apps">--</h3>
+        </div>
+
+        <!-- third most visited app -->
+        <div class="circle">
+            <h3 id="timeOnSiteThree" class="hours">--</h3>
+        </div>
+        <div class="rectangle">
+            <h3 id="siteThree" class="apps">--</h3>
+        </div>
+
+        <!-- second most visited app -->
+        <div class="circle2">
+            <h3 id="timeOnSiteFour" class="hours">--</h3>
+        </div>
+        <div class="rectangle2">
+            <h3 id="siteFour" class="apps">--</h3>
+        </div>
+
+        <!-- horizontal lines to connect the hours and app -->
+        <div id="line1">─</div>
+        <div id="line2">─</div>
+        <div id="line3">─</div>
+        <div id="line4">─</div>
+
+        <div id="tam-div">
+            <h2 class="subheader">Tips And Motivation</h2>
+
+            <div class="tam-box">
+                <h3 class="tam" id="output1">Go on a walk or take a drive.</h3>
+            </div>
+
+            <br>
+
+            <div class="tam-box">
+                <h3 class="tam" id="output2">No great thing is created suddenly.</h3>
+            </div>
+
+            <br>
+
+            <div class="btn-box">
+                <button id="btn">Generate Tips and Motivation</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
