@@ -1,14 +1,7 @@
 var sortedWebDict = [];
 
 // Detects when user clicks off of window
-chrome.windows.onFocusChanged.addListener(function(windowId){
-    if (windowId == chrome.windows.WINDOW_ID_NONE){
-        processSiteChange(false);
-    }
-    else{
-        processSiteChange(true);
-    }
-});
+chrome.windows.onFocusChanged.addListener(processSiteChange);
 // Detects when user changes sites within a tab
 chrome.tabs.onUpdated.addListener(processSiteChange);
 // Detects when user changes tabs within a window
@@ -36,23 +29,23 @@ if (localStorage.getItem('lastReset')) {
         date: weekStart
     }
     localStorage.setItem('lastReset', JSON.stringify(lastReset));
-    console.log('New reset day: ' + weekStart);
+    console.log('New reset day is ' + weekStart);
 }
 
 // Checks to see if an object to collect the website data exists
 if (localStorage.getItem('websiteDict')) {
     var websiteDict = JSON.parse(localStorage.getItem('websiteDict'));
-    console.log('websiteDict exists');
+    console.log('A websiteDict exists');
 } else {
     var websiteDict = {};
-    console.log('websiteDict does not exist');
+    console.log('A new websiteDict was created');
 }
 
 // Process current site
-function processSiteChange(isWindowActive) {
+function processSiteChange() {
     // Gets url and hostname of current tab
     chrome.tabs.query({"active": true}, function(tabs) {
-        if (tabs[0] && isWindowActive) {
+        if (tabs.length > 0 && tabs[0] != null) {
             let url = tabs[0].url;
             try {
                 let urlObject = new URL(url);
@@ -67,8 +60,8 @@ function processSiteChange(isWindowActive) {
             websiteDict[hostName] = [0,0,0,0,0,0,0];
         }
         // If there was a last website, program gets it. If not, program stores current site as the last website
-        if (localStorage.getItem('lastWebsite') != null) {
-            let lastWebsite = JSON.parse(localStorage.getItem('lastWebsite'));
+        if (sessionStorage.getItem('lastWebsite') != null) {
+            let lastWebsite = JSON.parse(sessionStorage.getItem('lastWebsite'));
             if (!(lastWebsite.website in websiteDict)) {
                 websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
             }
@@ -78,8 +71,8 @@ function processSiteChange(isWindowActive) {
             websiteDict[lastWebsite.website][dayOfTheWeek] = secondsPassed + websiteDict[lastWebsite.website][dayOfTheWeek];
             console.log(secondsPassed + ' added to ' + lastWebsite.website);
 
-            // Data for time offline is reset
-            if (lastWebsite.website == 'undefined') {
+            // Data for time off of Chrome and on the time on a new tab is set to 0
+            if (lastWebsite.website == 'undefined' || lastWebsite.website == 'newtab') {
                 websiteDict[lastWebsite.website] = [0,0,0,0,0,0,0];
             }
 
@@ -87,13 +80,13 @@ function processSiteChange(isWindowActive) {
                 website: hostName,
                 timeStamp: Date.now()
             }
-            localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
+            sessionStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
         } else {
             let lastWebsite = {
                 website: hostName,
                 timeStamp: Date.now()
             }
-            localStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
+            sessionStorage.setItem('lastWebsite', JSON.stringify(lastWebsite));
         }
         // Sorting the array based on their values (time spent on a site)
         sortData(websiteDict);
