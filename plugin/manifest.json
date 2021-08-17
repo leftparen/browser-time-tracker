@@ -3,15 +3,23 @@
     "manifest_version": 2,
     "description": "Extension tracks amount of time user spends on each website per week",
     "version": "1.0.0",
-    "icons": { "128": "icon_128.png"},
+    "icons": {
+        "128": "icon_128.png"
+    },
     "background": {
-        "scripts": ["background.js"],
+        "scripts": [
+            "background.js"
+        ],
         "persistent": true
     },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
-            "js": ["popup.js"]
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "popup.js"
+            ]
         }
     ],
     "browser_action": {
@@ -19,6 +27,10 @@
         "default_popup": "popup.html"
     },
     "permissions": [
-        "tabs"
-    ]
+        "tabs",
+        "https://cdn.jsdelivr.net/npm/chart.js"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' hhttps://cdn.jsdelivr.net/npm/chart.js;"
+    }
 }

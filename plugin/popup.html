@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
@@ -9,27 +9,30 @@
     <title>JustIn Time</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" type="text/css">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <style>
         #header {
             background-color: #add8e6;
             width: 350px;
-            height: 50px;
+            height: 40px;
             margin-bottom: -30px;
         }
 
         #logo {
             display: flex;
-            width: 30px;
+            width: 38px;
             padding: 5px;
             margin-bottom: -75px;
         }
 
         #title {
             padding: 10px;
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: right;
         }
 
@@ -92,6 +95,8 @@
             display: flex;
             padding-top: 25px;
             justify-content: center;
+            margin-top: 15px;
+            font-size: 15px;
         }
 
         .rectangle {
@@ -121,34 +126,35 @@
         .apps {
             display: flex;
             justify-content: center;
-            margin-top: 22px;
+            margin-top: 20px;
+            font-size: 15px;
         }
 
         #line1 {
-            font-size: 53px;
-            margin-left: 122px;
-            margin-top: -450px;
+            font-size: 55px;
+            margin-left: 120px;
+            margin-top: -390px;
             color: #8aacb8;
         }
 
         #line2 {
-            font-size: 53px;
-            margin-left: 172px;
-            margin-top: 50px;
+            font-size: 55px;
+            margin-left: 170px;
+            margin-top: 25px;
             color: #8aacb8;
         }
 
         #line3 {
-            font-size: 53px;
-            margin-left: 122px;
-            margin-top: 50px;
+            font-size: 55px;
+            margin-left: 120px;
+            margin-top: 25px;
             color: #8aacb8;
         }
 
         #line4 {
-            font-size: 53px;
-            margin-left: 172px;
-            margin-top: 50px;
+            font-size: 55px;
+            margin-left: 170px;
+            margin-top: 20px;
             color: #8aacb8;
         }
 
@@ -161,11 +167,19 @@
             margin-left: 22px;
             background-color: white;
             opacity: .7;
-            font-size: 13px;
         }
 
         #tam-div {
-            margin-top: 70px;
+            margin-top: 5px;
+        }
+
+        .tam {
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        #o1 {
+            margin-top: 25px;
         }
 
         .btn-box {
@@ -198,8 +212,11 @@
     <!-- top of popup -->
     <div id="header">
         <img id="logo" src="logo.png">
-        <h1 id="title"><a href="popup.html" target="_blank">JustIn Time</a></h1>
+        <h1 id="title">JustIn Time</h1>
     </div>
+
+    <!-- display chart -->
+    <canvas id="myChart"></canvas>
 
     <!-- background of popup -->
     <div id="background">
@@ -246,7 +263,7 @@
         <div id="tam-div">
             <h2 class="subheader">Tips And Motivation</h2>
 
-            <div class="tam-box">
+            <div class="tam-box" id="o1">
                 <h3 class="tam" id="output1">Go on a walk or take a drive.</h3>
             </div>
 
